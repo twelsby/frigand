@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -18,10 +20,14 @@ import javax.ws.rs.core.Response;
 @Path("/update")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Component
 public class FritzUpdateEndpoint {
 
     @NonNull
     private GandiClient client;
+    
+    @Value("${frigand.target}")
+    private String name;
 
     @Path("/")
     @GET
@@ -30,7 +36,7 @@ public class FritzUpdateEndpoint {
                            @QueryParam("domain") String domain, @QueryParam("ip6addr") String ip6ddr) {
         GandiAUpdateRequest request = new GandiAUpdateRequest();
         request.ip(ipaddr);
-        GandiAnswer answer = client.update(domain, "@", "A", username, request);
+        GandiAnswer answer = client.update(domain, name, "A", username, request);
         if("DNS Record Created".equals(answer.getMessage())) {
             return Response.ok().build();
         } else {
