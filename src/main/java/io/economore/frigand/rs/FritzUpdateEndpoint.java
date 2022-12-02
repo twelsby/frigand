@@ -34,14 +34,16 @@ public class FritzUpdateEndpoint {
     @Produces("text/plain")
     public Response update(@QueryParam("ipaddr") String ipaddr, @QueryParam("username") String username, @QueryParam("pass") String pass,
                            @QueryParam("domain") String domain, @QueryParam("ip6addr") String ip6ddr) {
-        GandiAUpdateRequest request = new GandiAUpdateRequest();
-        request.ip(ipaddr);
-        GandiAnswer answer = client.update(domain, name, "A", username, request);
-        if("DNS Record Created".equals(answer.getMessage())) {
-            return Response.ok().build();
-        } else {
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        for (String n : name.split("[:;,]")) {
+            GandiAUpdateRequest request = new GandiAUpdateRequest();
+            request.ip(ipaddr);
+            GandiAnswer answer = client.update(domain, n, "A", username, request);
+            if(!"DNS Record Created".equals(answer.getMessage())) {
+                return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            }
         }
+
+        return Response.ok().build();
     }
 
 }
