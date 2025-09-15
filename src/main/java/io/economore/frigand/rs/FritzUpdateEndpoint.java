@@ -1,6 +1,7 @@
 package io.economore.frigand.rs;
 
 import io.economore.frigand.gandi.GandiAUpdateRequest;
+import io.economore.frigand.gandi.GandiAAAAUpdateRequest;
 import io.economore.frigand.gandi.GandiAnswer;
 import io.economore.frigand.gandi.GandiClient;
 import lombok.AccessLevel;
@@ -35,9 +36,16 @@ public class FritzUpdateEndpoint {
     public Response update(@QueryParam("ipaddr") String ipaddr, @QueryParam("username") String username, @QueryParam("pass") String pass,
                            @QueryParam("domain") String domain, @QueryParam("ip6addr") String ip6ddr) {
         for (String n : name.split("[:;,]")) {
-            GandiAUpdateRequest request = new GandiAUpdateRequest();
-            request.ip(ipaddr);
-            GandiAnswer answer = client.update(domain, n, "A", username, request);
+//            GandiAUpdateRequest request = new GandiAUpdateRequest();
+//            request.ip(ipaddr);
+//            GandiAnswer answer = client.update(domain, n, "A", username, request);
+//            if(!"DNS Record Created".equals(answer.getMessage())) {
+//                return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+//            }
+
+            GandiAAAAUpdateRequest request6 = new GandiAAAAUpdateRequest();
+            request6.ip(ip6addr);
+            GandiAnswer answer6 = client.update(domain, n, "AAAA", username, request6);
             if(!"DNS Record Created".equals(answer.getMessage())) {
                 return Response.status(Response.Status.NOT_ACCEPTABLE).build();
             }
