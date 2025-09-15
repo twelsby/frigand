@@ -1,7 +1,6 @@
 package io.economore.frigand.rs;
 
 import io.economore.frigand.gandi.GandiAUpdateRequest;
-import io.economore.frigand.gandi.GandiAAAAUpdateRequest;
 import io.economore.frigand.gandi.GandiAnswer;
 import io.economore.frigand.gandi.GandiClient;
 import lombok.AccessLevel;
