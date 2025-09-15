@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class GandiAUpdateRequest {
 
-    private String rrset_type = "A";
+    private String rrset_type = "AAAA";
     private Integer rrset_ttl = 300;
     private List<String> rrset_values;
 
