@@ -45,7 +45,7 @@ public class FritzUpdateEndpoint {
 
             GandiAUpdateRequest request6 = new GandiAUpdateRequest();
             request6.ip(ip6addr);
-            GandiAnswer answer6 = client.update6(domain, n, "AAAA", username, request6);
+            GandiAnswer answer6 = client.update(domain, n, "AAAA", username, request6);
             if(!"DNS Record Created".equals(answer6.getMessage())) {
                 return Response.status(Response.Status.NOT_ACCEPTABLE).build();
             }
